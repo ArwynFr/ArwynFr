@@ -11,5 +11,5 @@ Interesting project I am or have been working on:
 
 Github actions:
 * [conventional verisoning](https://github.com/ArwynFr/actions-conventional-versioning) automatically create a semver release of your project
-* [build mission](https://github.com/team-gsri/actions-build-mission) turns an arma 3 mission source directory into a binarized pbo using arma 3 tools
-* [addon builder](https://github.com/team-gsri/actions-addon-builder) runs arma 3 tools addon builder as a Github Action
+* [arma 3 tools](https://github.com/team-gsri/actions-arma-tools) runs arma 3 tools in order to build and publish missions or addons to GtiHub and Steam
+* [docker context](https://github.com/ArwynFr/actions-docker-context) provides SSH access to remote docker host in a Github workflow
