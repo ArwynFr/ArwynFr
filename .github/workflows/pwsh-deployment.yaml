@@ -1,0 +1,47 @@
+name: continuous deployment
+
+on:
+  workflow_call:
+    inputs:
+      manifest:
+        description: Path to the module manifest file
+        required: true
+        type: string
+      source:
+        description: Path to the module source directory
+        required: true
+        type: string
+    secrets:
+      PSGALLERY_APIKEY:
+        required: true
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source files
+        uses: actions/checkout@v4
+
+      - name: Get new version
+        uses: arwynfr/actions-conventional-versioning/get-newVersion@v3
+        id: new-version
+        with:
+          allow-additional-modifiers: true
+          feat-upgrades-minor: false
+          strict-types: true
+
+      - name: Update module manifest version
+        shell: pwsh
+        run: Update-ModuleManifest -ModuleVersion ${{ steps.new-version.outputs.next-version }} ${{ inputs.manifest }}
+
+      - name: Publish module on PSGallery
+        shell: pwsh
+        run: Publish-Module -Path ${{ inputs.source }} -NuGetApiKey ${{ secrets.PSGALLERY_APIKEY }}
+
+      - name: Tag new version on the repository
+        uses: arwynfr/actions-conventional-versioning@v3
+        with:
+          allow-additional-modifiers: true
+          feat-upgrades-minor: false
+          strict-types: true
