@@ -19,29 +19,30 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout source files
         uses: actions/checkout@v4
 
-      - name: Get new version
-        uses: arwynfr/actions-conventional-versioning/get-newVersion@v3
+      - name: Get new version number
+        uses: arwynfr/arwynfr/.github/actions/step-version@main
         id: new-version
         with:
           allow-additional-modifiers: true
           feat-upgrades-minor: false
           strict-types: true
 
-      - name: Update module manifest version
-        shell: pwsh
-        run: Update-ModuleManifest -ModuleVersion ${{ steps.new-version.outputs.next-version }} ${{ inputs.manifest }}
+      - shell: pwsh
+        name: Update module manifest version
+        run: Update-ModuleManifest -ModuleVersion '${{ steps.new-version.outputs.next-version }}' -Path '${{ inputs.manifest }}'
 
-      - name: Publish module on PSGallery
-        shell: pwsh
-        run: Publish-Module -Path ${{ inputs.source }} -NuGetApiKey ${{ secrets.PSGALLERY_APIKEY }}
+      - shell: pwsh
+        name: Publish module on PSGallery
+        run: Publish-Module -Path '${{ inputs.source }}' -NuGetApiKey '${{ secrets.PSGALLERY_APIKEY }}'
 
-      - name: Tag new version on the repository
-        uses: arwynfr/actions-conventional-versioning@v3
-        with:
-          allow-additional-modifiers: true
-          feat-upgrades-minor: false
-          strict-types: true
+      - shell: pwsh
+        name: Tag new version on the repository
+        run: gh release create '${{ steps.new-version.outputs.next-version }}' --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Add major and minor tags
+        uses: arwynfr/arwynfr/.github/actions/update-version-tags@main
