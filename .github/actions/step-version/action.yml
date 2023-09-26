@@ -1,0 +1,65 @@
+name: "Conventional Versioning: Step version"
+description: Provides the new Semantic Version based on Conventional Commits
+author: ArwynFr
+branding:
+  icon: tag
+  color: blue
+
+inputs:
+  allow-additional-modifiers:
+    description: Whether this action supports additional modifiers and footers for minor and patch updates
+    required: false
+    default: "false"
+
+  feat-upgrades-minor:
+    description: Whether this action should increment a minor bump when the commit type is feat
+    required: false
+    default: "true"
+
+  strict-types:
+    description: Whether this action should fail if the commit type is a custom type
+    required: false
+    default: "false"
+
+outputs:
+  current-version:
+    description: Current release version number found in the repository
+    value: ${{ steps.new-github-release.outputs.current-version }}
+
+  bump-type:
+    description: Type of version bump based on commit message
+    value: ${{ steps.new-github-release.outputs.bump-type }}
+
+  next-version:
+    description: Calculated target version of the new release
+    value: ${{ steps.new-github-release.outputs.next-version }}
+
+runs:
+  using: "composite"
+  steps:
+    - shell: pwsh
+      name: Install Powershell module ConventionalVersioning
+      run: |
+        Install-Module -Force ConventionalVersioning
+        Import-Module -Force ConventionalVersioning
+
+    - shell: pwsh
+      name: Calculate new version for the repository
+      id: new-github-release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        $parameters = @{
+          RepositoryName           = "${{ github.repository }}"
+          CommitMessage            = "${{ github.event.head_commit.message }}"
+          StrictTypes              = "${{ inputs.strict-types }}" -eq "true"
+          FeatUpgradesMinor        = "${{ inputs.feat-upgrades-minor }}" -eq "true"
+          AllowAdditionalModifiers = "${{ inputs.allow-additional-modifiers }}" -eq "true"
+        }
+        New-RepositoryVersion @parameters
+
+# FIXME update the powershell module to return a structure and uncomment this code:
+# $version = New-RepositoryVersion @parameters
+# "current-version=$($version.currentVersion)" >> $env:GITHUB_OUTPUT
+# "next-version=$($version.nextVersion)" >> $env:GITHUB_OUTPUT
+# "bump-type=$($version.bumpType)" >> $env:GITHUB_OUTPUT

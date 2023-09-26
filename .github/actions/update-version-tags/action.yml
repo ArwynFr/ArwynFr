@@ -1,0 +1,21 @@
+name: "Conventional Versioning: new version tags"
+description: Adds minor and major version tags to the repository
+author: ArwynFr
+
+branding:
+  icon: tag
+  color: blue
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add major and minor tags
+      shell: pwsh
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        $release = gh release view --json tagName --repo "${{ github.repository }}" | convertfrom-json
+        $version = [semver]::new($release.tagName)
+        git tag --force "v$($version.Major).$($version.Minor)"
+        git tag --force "v$($version.Major)"
+        git push origin --tags --force
