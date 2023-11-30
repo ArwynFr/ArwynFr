@@ -48,7 +48,7 @@ jobs:
             ${{ inputs.resources }}
 
       - name: Kustomize image tag
-        run: (cd ${{ inputs.resources }} && kustomize set image app=${image,,})
+        run: (cd ${{ inputs.resources }} && kustomize edit set image app=${image,,})
 
       - name: Apply ressources on the cluster
         run: kubectl apply -k ${{ inputs.resources }}
