@@ -1,0 +1,47 @@
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: version number of the application
+      sources:
+        required: true
+        type: string
+        description: relative path to the application sources directory
+      resources:
+        required: true
+        type: string
+        description: relative path to the kubernetes ressources directory
+
+env:
+  image: ghcr.io/${{ github.repository }}:${{ inputs.version }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source files
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build --tag ${image,,} ${{ inputs.sources }}
+      
+      - name: Push image to the registry
+        run: docker push ${image,,}
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout source files
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            ${{ inputs.resources }}
+
+      - name: Kustomize image tag
+        run: (cd ${{ inputs.resources }} && kustomize set image app=${image,,})
+
+      - name: Apply ressources on the cluster
+        run: kubectl apply -k ${{ inputs.resources }}
