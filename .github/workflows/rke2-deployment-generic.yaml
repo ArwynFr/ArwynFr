@@ -51,7 +51,7 @@ jobs:
         run: (cd ${{ inputs.resources }} && kustomize edit set image app=${image,,})
 
       - name: Authenticate to the kubernetes cluster
-        uses: ./.github/actions/kubernetes-auth
+        uses: arwynfr/arwynfr/.github/actions/kubernetes-auth@main
         with:
           token: ${{ secrets.token }}
           server: ${{ secrets.server }}
