@@ -1,0 +1,61 @@
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: version number of the application
+      sources:
+        description: path to the docker context directory
+        required: true
+        type: string
+      resources:
+        description: path to the kubernetes resources directory
+        required: true
+        type: string
+    secrets:
+      server:
+        description: URL to the Kubernetes cluster server
+        required: true
+      authority:
+        description: CA certificate of the cluster, base64 encoded
+        required: true
+      token:
+        description: JWT token of the ServiceAccount used for deployment
+        required: true
+
+env:
+  image: ghcr.io/${{ github.repository }}:${{ inputs.version }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source files
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build --tag ${image,,} ${{ inputs.sources }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image to the registry
+        run: docker push ${image,,}
+
+      - name: Kustomize image tag
+        run: (cd ${{ inputs.resources }} && kustomize edit set image app=${image,,})
+
+      - name: Authenticate to the kubernetes cluster
+        uses: ./.github/actions/kubernetes-auth
+        with:
+          token: ${{ secrets.token }}
+          server: ${{ secrets.server }}
+          authority: ${{ secrets.authority }}
+
+      - name: Apply ressources on the cluster
+        run: kubectl apply -k ${{ inputs.resources }}

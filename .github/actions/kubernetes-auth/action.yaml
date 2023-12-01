@@ -1,0 +1,37 @@
+name: Kubernetes cluster authentication
+description: Configures kubectl to connect to a remote Kubernetes cluster
+author: ArwynFr
+branding:
+  icon: anchor
+  color: blue
+
+inputs:
+  server:
+    description: The Kubernetes server URL
+    required: true
+  authority:
+    description: The cluster CA certificate base64 encoded
+    required: true
+  token:
+    description: The JWT token of the user
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      name: Configure cluster
+      run: |
+        echo '${{ inputs.authority }}' | base64 --decode > authority
+        kubectl config set-cluster default --server=${{ inputs.server }} --certificate-authority=./authority --embed-certs
+        rm authority
+
+    - shell: bash
+      name: Configure user
+      run: kubectl config set-credentials default --token=${{ inputs.token }}
+
+    - shell: bash
+      name: Configure context
+      run: |
+        kubectl config set-context default --cluster=default --namespace=default --user=default
+        kubectl config use-context default
