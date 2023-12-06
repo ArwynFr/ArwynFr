@@ -59,3 +59,9 @@ jobs:
 
       - name: Apply ressources on the cluster
         run: kubectl apply -k ${{ inputs.resources }}
+
+      - name: Logout from the Kubernetes cluster
+        run: |
+          kubectl config delete-context default
+          kubectl config delete-user default
+          kubectl config delete-cluster default
