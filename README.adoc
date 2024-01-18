@@ -4,11 +4,17 @@ My name is ArwynFr and I am a senior software architect in 🇫🇷 France.
 Here are some projets I am working on or have been working on:
 
 == Pwsh modules
+
 [horizontal]
 https://github.com/ArwynFr/pwsh-ConventionalCommits[Conventional Commits]:: Checks wether a git commit message follows conventional commits and parse the message into a stucture
 https://github.com/ArwynFr/pwsh-ConventionalVersioning[Conventional Versioning]:: Used to version a GitHub repo based on CC conventions and semver
 https://github.com/ArwynFr/pwsh-HashWebCopy[HashWebCopy]:: Directory syncing over https ; my personnal rsync alternative
 https://github.com/ArwynFr/pwsh-StepSemVer[StepSemVer]:: A QOL addition to the semver pwsh structure
+
+== Nuget libraries
+
+[horizontal]
+https://github.com/ArwynFr/dotnet-integration-testing[ArwynFr.IntegrationTesting]:: A set of utility classes helping to write integration tests in dotnet
 
 == Github actions
 
@@ -22,5 +28,6 @@ https://github.com/ArwynFr/actions-conventional-versioning[conventional versioni
 [horizontal]
 https://github.com/ArwynFr/AspectNetSharp[AspectNetSharp]:: A lightweight AOP library for .NET Framework
 https://github.com/ArwynFr/docker-tools[docker tools]:: Small utils for docker admins, does stuff like volume backup/restore
-https://github.com/ArwynFr/homepage[homepage]:: My personnal webpage ; used to experiment with agent-based deployment
+https://github.com/ArwynFr/stack-homepage[homepage]:: My personnal webpage ; used to experiment with agent-based deployment
+https://github.com/ArwynFr/stack-curriculum[curriculum]:: My personnal curriculum ; used to experiment with asciidoc
 VaReg (project):: A public service for virtual aircraft and airline registration for flight simmers
