@@ -1,8 +1,0 @@
-{
-    "name": "Verify Pull Requests Titles",
-    "description": "Ensures all pull requests follow the conventional commit pattern.",
-    "iconName": "octicon git-pull-request",
-    "categories": [
-        "continuous-integration"
-    ]
-}
