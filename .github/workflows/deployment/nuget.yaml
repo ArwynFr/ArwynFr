@@ -7,19 +7,16 @@ on:
         description: Path to the dotnet project, solution or directory to pack
         required: true
         type: string
-      version:
-        description: Package version number in semver format
-        required: true
-        type: string
       source:
-        default: nuget.org
         description: Push the package to this nuget source
+        default: nuget.org
         required: false
         type: string
     secrets:
       NUGET_APIKEY:
-        required: true
         description: API key used to authenticate to the package source
+        required: true
+        type: string
 
 jobs:
   deployment:
