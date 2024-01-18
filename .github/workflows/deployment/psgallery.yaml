@@ -1,0 +1,47 @@
+name: Deploy a powershell module to PSGallery
+
+on:
+  workflow_call:
+    inputs:
+      module:
+        description: Path to the module root directory
+        required: true
+        type: string
+    secrets:
+      PSGALLERY_APIKEY:
+        required: true
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source files
+        uses: actions/checkout@v4
+
+      - name: Get new version number
+        uses: arwynfr/arwynfr/.github/actions/step-version@main
+        id: new-version
+        with:
+          allow-additional-modifiers: true
+          feat-upgrades-minor: false
+          strict-types: true
+
+      - shell: pwsh
+        name: Update module manifest version
+        run: |
+          $ModuleName = Split-Path '${{ inputs.module }}' -Leaf
+          $ManifestPath = "${{ inputs.module }}/${ModuleName}.psd1"
+          Update-ModuleManifest -ModuleVersion '${{ steps.new-version.outputs.next-version }}' -Path $ManifestPath
+
+      - shell: pwsh
+        name: Publish module on PSGallery
+        run: Publish-Module -Path '${{ inputs.module }}' -NuGetApiKey '${{ secrets.PSGALLERY_APIKEY }}'
+
+      - shell: pwsh
+        name: Tag new version on the repository
+        run: gh release create '${{ steps.new-version.outputs.next-version }}' --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Add major and minor tags
+        uses: arwynfr/arwynfr/.github/actions/update-version-tags@main

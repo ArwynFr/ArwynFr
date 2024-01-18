@@ -1,0 +1,51 @@
+name: Deploy a dotnet library as a nuget package
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: Path to the dotnet project, solution or directory to pack
+        required: true
+        type: string
+      version:
+        description: Package version number in semver format
+        required: true
+        type: string
+      source:
+        default: nuget.org
+        description: Push the package to this nuget source
+        required: false
+        type: string
+    secrets:
+      NUGET_APIKEY:
+        required: true
+        description: API key used to authenticate to the package source
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source files
+        uses: actions/checkout@v4
+
+      - name: Get new version number
+        uses: arwynfr/arwynfr/.github/actions/step-version@main
+        id: new-version
+        with:
+          allow-additional-modifiers: true
+          feat-upgrades-minor: false
+          strict-types: true
+
+      - name: Build nuget package
+        run: dotnet pack '${{ inputs.target }}' -p:Version=${{ steps.new-version.outputs.next-version }} --output .
+
+      - name: Publish nuget package
+        run: dotnet nuget push *.nupkg --api-key '${{ secrets.NUGET_APIKEY }}' --source '${{ inputs.source }}'
+
+      - name: Tag repository version
+        run: gh release create '${{ steps.new-version.outputs.next-version }}' --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Add major and minor tags
+        uses: arwynfr/arwynfr/.github/actions/update-version-tags@main
