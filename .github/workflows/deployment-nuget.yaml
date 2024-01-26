@@ -16,7 +16,6 @@ on:
       NUGET_APIKEY:
         description: API key used to authenticate to the package source
         required: true
-        type: string
 
 jobs:
   deployment:
