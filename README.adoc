@@ -3,31 +3,24 @@ My name is ArwynFr and I am a senior software architect in 🇫🇷 France.
 
 Here are some projets I am working on or have been working on:
 
-== Pwsh modules
+== Current projects
 
 [horizontal]
-https://github.com/ArwynFr/pwsh-ConventionalCommits[Conventional Commits]:: Checks wether a git commit message follows conventional commits and parse the message into a stucture
-https://github.com/ArwynFr/pwsh-ConventionalVersioning[Conventional Versioning]:: Used to version a GitHub repo based on CC conventions and semver
-https://github.com/ArwynFr/pwsh-HashWebCopy[HashWebCopy]:: Directory syncing over https ; my personnal rsync alternative
-https://github.com/ArwynFr/pwsh-StepSemVer[StepSemVer]:: A QOL addition to the semver pwsh structure
-
-== Nuget libraries
-
-[horizontal]
+https://github.com/ArwynFr/arma3sync-docker[arma3sync-docker]:: A docker version of the arma3sync tool used for Arma 3 mod distribution
 https://github.com/ArwynFr/dotnet-integration-testing[ArwynFr.IntegrationTesting]:: A set of utility classes helping to write integration tests in dotnet
-
-== Github actions
-
-[horizontal]
-https://github.com/team-gsri/actions-arma-tools[arma 3 tools]:: Runs arma 3 tools in order to build and publish missions or addons to GtiHub and Steam
-https://github.com/ArwynFr/actions-docker-context[docker context]:: Provide SSH access to remote docker host in a Github workflow
-https://github.com/ArwynFr/actions-conventional-versioning[conventional versioning]:: Automatically create a semver release of your project
-
-== Other
-
-[horizontal]
-https://github.com/ArwynFr/AspectNetSharp[AspectNetSharp]:: A lightweight AOP library for .NET Framework
-https://github.com/ArwynFr/docker-tools[docker tools]:: Small utils for docker admins, does stuff like volume backup/restore
+https://github.com/ArwynFr/stack-curriculum[curriculum]:: My personnal curriculum ; used to experiment with asciidoc and doc-as-code
+https://github.com/ArwynFr/discord-oidc-provider-dotnet[Discord OIDC provider]:: A .NET application that acts as an OIDC provider but defers auth to Discord
+https://github.com/ArwynFr/pwsh-HashWebCopy[HashWebCopy]:: Directory syncing over https ; my personnal rsync alternative
 https://github.com/ArwynFr/stack-homepage[homepage]:: My personnal webpage ; used to experiment with agent-based deployment
-https://github.com/ArwynFr/stack-curriculum[curriculum]:: My personnal curriculum ; used to experiment with asciidoc
-VaReg (project):: A public service for virtual aircraft and airline registration for flight simmers
+https://github.com/ArwynFr/pwsh-StepSemVer[StepSemVer]:: A QOL addition to the semver pwsh structure
+VA registry (project):: A public service for virtual aircraft and airline registration for flight simmers
+
+== Deprecated projects
+
+[horizontal]
+https://github.com/ArwynFr/AspectNetSharp[AspectNetSharp]:: Depreacted in favor of reactive programming
+https://github.com/ArwynFr/pwsh-ConventionalCommits[Conventional Commits (pwsh)]:: Depreacted in favor of +semver: because of the feat: dispute
+https://github.com/ArwynFr/pwsh-ConventionalVersioning[Conventional Versioning (pwsh)]:: Depreacted in favor of +semver: because of the feat: dispute
+https://github.com/ArwynFr/actions-conventional-versioning[conventional versioning (gh actions)]:: Depreacted in favor of +semver: because of the feat: dispute
+https://github.com/ArwynFr/actions-docker-context[docker context (gh actions)]:: Deprecated in favor of kubernetes usage and for security reasons
+https://github.com/ArwynFr/docker-tools[docker tools]:: Deprecated in favor of kubernetes usage
