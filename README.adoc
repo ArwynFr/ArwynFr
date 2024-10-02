@@ -12,7 +12,7 @@ https://github.com/ArwynFr/stack-curriculum[curriculum]:: My personnal curriculu
 https://github.com/ArwynFr/dotnet-discord-oidc-provider[Discord OIDC provider]:: A .NET application that acts as an OIDC provider but defers auth to Discord
 https://github.com/ArwynFr/pwsh-HashWebCopy[HashWebCopy]:: Directory syncing over https ; my personnal rsync alternative
 https://github.com/ArwynFr/stack-homepage[homepage]:: My personnal webpage ; used to experiment with agent-based deployment
-https://github.com/ArwynFr/pwsh-StepSemVer[StepSemVer]:: A QOL addition to the semver pwsh structure
+https://github.com/ArwynFr/pwsh-SemanticVersion[SemanticVersion]:: A QOL addition to the semver pwsh structure
 VA registry (project):: A public service for virtual aircraft and airline registration for flight simmers
 
 == Deprecated projects
