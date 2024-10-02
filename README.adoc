@@ -7,13 +7,12 @@ Here are some projets I am working on or have been working on:
 
 [horizontal]
 https://github.com/ArwynFr/arma3sync-docker[arma3sync-docker]:: A docker version of the arma3sync tool used for Arma 3 mod distribution
-https://github.com/ArwynFr/dotnet-integration-testing[ArwynFr.IntegrationTesting]:: A set of utility classes helping to write integration tests in dotnet
+https://github.com/ArwynFr/dotnet-integration-testing[ArwynFr.IntegrationTesting]:: A dotnet library helping to write WebApplicationFactory tests
+https://github.com/ArwynFr/dotnet-discord-oidc-provider[Discord OIDC provider]:: A dotnet application that acts as an OIDC provider but defers auth to Discord
 https://github.com/ArwynFr/stack-curriculum[curriculum]:: My personnal curriculum ; used to experiment with asciidoc and doc-as-code
-https://github.com/ArwynFr/dotnet-discord-oidc-provider[Discord OIDC provider]:: A .NET application that acts as an OIDC provider but defers auth to Discord
-https://github.com/ArwynFr/pwsh-HashWebCopy[HashWebCopy]:: Directory syncing over https ; my personnal rsync alternative
 https://github.com/ArwynFr/stack-homepage[homepage]:: My personnal webpage ; used to experiment with agent-based deployment
-https://github.com/ArwynFr/pwsh-SemanticVersion[SemanticVersion]:: A QOL addition to the semver pwsh structure
-VA registry (project):: A public service for virtual aircraft and airline registration for flight simmers
+https://github.com/ArwynFr/pwsh-HashWebCopy[ArwynFr.HashWebCopy]:: A powershell module used to sync directories over https
+https://github.com/ArwynFr/pwsh-SemanticVersion[ArwynFr.SemanticVersion]:: A powershell module used to increment semantic version numbers
 
 == Deprecated projects
 
